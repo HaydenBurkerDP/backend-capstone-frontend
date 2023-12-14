@@ -1,0 +1,43 @@
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  background-color: #a6bfd6;
+  width: 100%;
+  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.3);
+
+  .links-wrapper {
+    display: flex;
+    width: 400px;
+    justify-content: space-around;
+    align-items: center;
+
+    .link-wrapper {
+      // TODO: Add color to selected link-wrapper
+      // background-color: green;
+      // width: 135px;
+      // :not(:not(.navbar-container .links-wrapper .link-wrapper a.active)) {
+      // background-color: green;
+      // background-color: #a6bfd6;
+      // }
+
+      a {
+        font-size: x-large;
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+
+        // &.active {
+        //   background-color: green;
+        //   width: 135px;
+        // }
+      }
+    }
+  }
+
+  .right-side-wrapper {
+    display: flex;
+    width: 162px;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}

@@ -14,20 +14,35 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="logo-wrapper"></div>
-      <form>
-        <h1>Please log in</h1>
-        <label>Email</label>
-        <input type="email" onChange={(e) => setEmail(e.target.value)} />
+    <div className="login-page-container">
+      <div className="logo-wrapper">
+        <h1>LOGO</h1>
+      </div>
 
-        <label>Password</label>
-        <input type="password" onChange={(e) => setPassword(e.target.value)} />
+      <div className="login-wrapper">
+        <div className="text-wrapper">
+          <h2>Please log in</h2>
+        </div>
 
-        <button type="submit" onClick={handleSubmit}>
-          Login
-        </button>
-      </form>
+        <form className="login-form">
+          <div className="input-wrapper">
+            <label>Email</label>
+            <input type="email" onChange={(e) => setEmail(e.target.value)} />
+          </div>
+
+          <div className="input-wrapper">
+            <label>Password</label>
+            <input
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <button className="submit-btn" type="submit" onClick={handleSubmit}>
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

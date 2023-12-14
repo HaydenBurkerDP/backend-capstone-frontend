@@ -40,17 +40,23 @@ const Goals = () => {
 
   return (
     <div className="goals-container">
-      <h1>My Goals</h1>
-      <FontAwesomeIcon
-        onClick={() => {
-          fetchWrapper("/goal", "POST", {
-            name: "",
-            description: "",
-          }).then((res) => setMyGoals((prev) => [...prev, res.goal]));
-        }}
-        icon="fa-solid fa-plus"
-      />
-      <div className="my-goals-container">
+      <div className="goals-header">
+        <h1>My Goals</h1>
+
+        <button className="plus-btn">
+          <FontAwesomeIcon
+            onClick={() => {
+              fetchWrapper("/goal", "POST", {
+                name: "",
+                description: "",
+              }).then((res) => setMyGoals((prev) => [...prev, res.goal]));
+            }}
+            icon="fa-solid fa-plus"
+          />
+        </button>
+      </div>
+
+      <div className="goal-cards-container">
         {myGoals.map((goal) => {
           return (
             <GoalCard
@@ -69,9 +75,13 @@ const Goals = () => {
         })}
       </div>
 
-      <h1>Shared Goals</h1>
+      {sharedGoals.length ? (
+        <div className="goals-header">
+          <h1>Shared Goals</h1>
+        </div>
+      ) : null}
 
-      <div>
+      <div className="goal-cards-container">
         {sharedGoals.map((goal) => {
           return <GoalCard key={goal.goal_id} goal={goal} />;
         })}

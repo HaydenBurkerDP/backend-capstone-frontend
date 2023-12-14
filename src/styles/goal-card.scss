@@ -1,0 +1,49 @@
+.goal-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #a6bfd6;
+  border-radius: 10px;
+  margin: 30px 2%;
+  padding: 20px;
+  width: 35%;
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .goal-name {
+      margin: 0;
+    }
+
+    .edit-btn {
+      font-size: 24px;
+      border: none;
+      background-color: transparent;
+    }
+  }
+
+  .goal-description {
+    height: 160px;
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .start-goal-btn {
+      border: none;
+      background-color: #619d72;
+      padding: 0.5em 1em;
+      border-radius: 0.4em;
+      font-size: 16px;
+    }
+
+    .share-btn {
+      font-size: 24px;
+      border: none;
+      background-color: transparent;
+    }
+  }
+}
