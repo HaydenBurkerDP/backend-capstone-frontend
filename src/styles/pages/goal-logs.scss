@@ -1,0 +1,23 @@
+.goal-logs-container {
+  margin-top: 10px;
+  .goal-logs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+    margin: 1.5% 0;
+
+    .plus-btn {
+      border: none;
+      background-color: transparent;
+      font-size: 45px;
+    }
+  }
+
+  .goal-log-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0px 10%;
+  }
+}

@@ -49,7 +49,11 @@ const Goals = () => {
               fetchWrapper("/goal", "POST", {
                 name: "",
                 description: "",
-              }).then((res) => setMyGoals((prev) => [...prev, res.goal]));
+              }).then((res) => {
+                setMyGoals((prev) => [...prev, res.goal]);
+                setIsEditGoalModalOpen(true);
+                setSelectedGoal(res.goal);
+              });
             }}
             icon="fa-solid fa-plus"
           />

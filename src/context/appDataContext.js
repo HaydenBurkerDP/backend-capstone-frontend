@@ -12,6 +12,7 @@ const AppDataContext = createContext();
 export const AppDataContextProvider = ({ children }) => {
   const [myGoals, setMyGoals] = useState([]);
   const [sharedGoals, setSharedGoals] = useState([]);
+  const [goalLogs, setGoalLogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [users, setUsers] = useState([]);
 
@@ -26,6 +27,13 @@ export const AppDataContextProvider = ({ children }) => {
     return fetchWrapper("/goals/shared", "GET", null, signal).then((res) => {
       setSharedGoals(res.goals);
       return res.goals;
+    });
+  }, []);
+
+  const fetchGoalLogs = useCallback((signal) => {
+    return fetchWrapper("/goal-logs/me", "GET", null, signal).then((res) => {
+      setGoalLogs(res.goal_logs);
+      return res.goal_logs;
     });
   }, []);
 
@@ -60,6 +68,9 @@ export const AppDataContextProvider = ({ children }) => {
     fetchMyGoals,
     sharedGoals,
     fetchSharedGoals,
+    goalLogs,
+    setGoalLogs,
+    fetchGoalLogs,
     categories,
     setCategories,
     fetchCategories,

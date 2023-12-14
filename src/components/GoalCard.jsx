@@ -1,4 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import fetchWrapper from "../util/apiWrapper";
+import { displayDate } from "../util/dateUtils";
 
 const GoalCard = ({ goal, handleEdit, handleShare }) => {
   return (
@@ -6,11 +8,8 @@ const GoalCard = ({ goal, handleEdit, handleShare }) => {
       <div className="top">
         <h1 className="goal-name">{goal.name ? goal.name : "Untitled Goal"}</h1>
         {handleEdit ? (
-          <button className="edit-btn">
-            <FontAwesomeIcon
-              onClick={handleEdit}
-              icon="fa-solid fa-pen-to-square"
-            />
+          <button className="edit-btn" onClick={handleEdit}>
+            <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
           </button>
         ) : null}
       </div>
@@ -21,17 +20,17 @@ const GoalCard = ({ goal, handleEdit, handleShare }) => {
         <button
           className="start-goal-btn"
           onClick={() => {
-            console.log("create goal log");
+            fetchWrapper("/goal-log", "POST", {
+              goal_id: goal.goal_id,
+              start_date: displayDate(new Date()),
+            });
           }}
         >
           Start Goal
         </button>
         {handleShare ? (
-          <button class="share-btn">
-            <FontAwesomeIcon
-              onClick={handleShare}
-              icon="fa-solid fa-share-nodes"
-            />
+          <button class="share-btn" onClick={handleShare}>
+            <FontAwesomeIcon icon="fa-solid fa-share-nodes" />
           </button>
         ) : null}
       </div>
