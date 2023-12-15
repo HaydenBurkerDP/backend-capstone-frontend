@@ -64,45 +64,77 @@ const EditGoalLog = (props) => {
   };
 
   return (
-    <div className="edit-goal-container">
-      <FontAwesomeIcon onClick={onRequestClose} icon="fa-solid fa-xmark" />
-
-      <input value={name} onChange={(e) => setName(e.target.value)} />
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-
-      <div>
-        Start Date:{" "}
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
+    <div className="edit-goal-log-container">
+      <div className="close-wrapper">
+        <button onClick={onRequestClose} className="close-btn">
+          <FontAwesomeIcon icon="fa-solid fa-xmark" />
+        </button>
       </div>
-      <div>
-        End Date:{" "}
+
+      <div className="inputs-wrapper">
         <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
+          className="name-input"
+          placeholder="Goal Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
-      </div>
-      <div>
-        Completed:{" "}
-        <input
-          type="date"
-          value={completionDate}
-          onChange={(e) => setCompletionDate(e.target.value)}
+        <textarea
+          className="description-input"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
       </div>
 
-      <button onClick={() => setIsDeleteModalOpen(true)}>Delete</button>
-      <button onClick={() => setIsCategoriesModalOpen(true)}>
-        Edit Categories
-      </button>
-      <button onClick={updateGoal}>Save</button>
+      <div className="dates-wrapper">
+        <div className="date-wrapper">
+          Start Date:{" "}
+          <input
+            className="date-input"
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+        </div>
+        <div className="date-wrapper">
+          End Date:{" "}
+          <input
+            className="date-input"
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </div>
+        <div className="date-wrapper">
+          Completed:{" "}
+          <input
+            className="date-input"
+            type="date"
+            value={completionDate}
+            onChange={(e) => setCompletionDate(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="buttons-wrapper">
+        <button
+          className="delete-btn"
+          onClick={() => setIsDeleteModalOpen(true)}
+        >
+          Delete
+        </button>
+
+        <div className="right-buttons-wrapper">
+          <button
+            className="categories-btn"
+            onClick={() => setIsCategoriesModalOpen(true)}
+          >
+            Edit Categories
+          </button>
+          <button className="save-btn" onClick={updateGoal}>
+            Save
+          </button>
+        </div>
+      </div>
 
       <Modal
         isModalOpen={isCategoriesModalOpen}
@@ -118,6 +150,10 @@ const EditGoalLog = (props) => {
       <Modal
         isModalOpen={isDeleteModalOpen}
         onRequestClose={() => setIsDeleteModalOpen(false)}
+        content={{
+          width: "400px",
+          height: "250px",
+        }}
       >
         <ConfirmDelete
           message="Are you sure you want to delete this goal?"

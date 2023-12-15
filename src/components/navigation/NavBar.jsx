@@ -1,33 +1,73 @@
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useAuthInfo } from "../../context/authContext";
 
 const NavBar = () => {
+  const userMenuRef = useRef(null);
+  const userMenuToggleRef = useRef(null);
+
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
   const { logout, user } = useAuthInfo();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      console.log(event);
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target) &&
+        !userMenuToggleRef.current.contains(event.target) &&
+        isUserMenuOpen
+      ) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isUserMenuOpen]);
+
   return (
     <div className="navbar-container">
       <div className="links-wrapper">
-        <div className="link-wrapper">
-          <NavLink exact to="/">
-            LOGO
-          </NavLink>
-        </div>
+        <NavLink exact to="/">
+          LOGO
+        </NavLink>
 
-        <div className="link-wrapper">
-          <NavLink to="/goals">Goals</NavLink>
-        </div>
+        <NavLink className="highlight-green" to="/goals">
+          Goals
+        </NavLink>
 
-        <div className="link-wrapper">
-          <NavLink to="/goal-logs">Goal logs</NavLink>
-        </div>
+        <NavLink className="highlight-blue" to="/goal-logs">
+          Goal logs
+        </NavLink>
       </div>
 
       <div className="right-side-wrapper">
         <h2>{user?.first_name}</h2>
-        <FontAwesomeIcon icon="fa-solid fa-chevron-down" />
+        <div
+          ref={userMenuToggleRef}
+          onClick={() => setIsUserMenuOpen((prev) => !prev)}
+        >
+          {isUserMenuOpen ? (
+            <FontAwesomeIcon icon="fa-solid fa-chevron-up" />
+          ) : (
+            <FontAwesomeIcon icon="fa-solid fa-chevron-down" />
+          )}
+        </div>
+        {isUserMenuOpen ? (
+          <div ref={userMenuRef} className="user-menu">
+            <div className="menu-option" onClick={() => logout()}>
+              Sign Out
+            </div>
+          </div>
+        ) : null}
       </div>
-      {/* <button onClick={() => logout()}>Logout</button> */}
     </div>
   );
 };

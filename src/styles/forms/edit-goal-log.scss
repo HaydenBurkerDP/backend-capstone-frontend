@@ -1,0 +1,108 @@
+.edit-goal-log-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+
+  .close-wrapper {
+    height: 3%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    .close-btn {
+      border: none;
+      background: transparent;
+      font-size: xx-large;
+      padding: 0;
+    }
+  }
+
+  .inputs-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    .name-input {
+      border: none;
+      width: 90%;
+      height: 8%;
+      margin-bottom: 15px;
+      font-size: x-large;
+      font-weight: 600;
+      background: transparent;
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    .description-input {
+      height: 100%;
+      border-radius: 4px;
+      resize: none;
+      background-color: #d6ebff;
+      padding: 8px;
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+
+  .dates-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 13%;
+
+    .date-wrapper {
+      .date-input {
+        border: none;
+        background: transparent;
+
+        &:focus-visible {
+          outline: none;
+        }
+      }
+    }
+  }
+
+  .buttons-wrapper {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2%;
+
+    .delete-btn {
+      background-color: #b07470;
+    }
+
+    .categories-btn {
+      background-color: #7091b0;
+    }
+
+    .save-btn {
+      background-color: #619d72;
+    }
+
+    .right-buttons-wrapper {
+      width: 15em;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button {
+      border: none;
+      border-radius: 3px;
+      padding: 0.5em 1em;
+      font-size: 16px;
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
+  }
+}

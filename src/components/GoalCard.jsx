@@ -29,7 +29,7 @@ const GoalCard = ({ goal, handleEdit, handleShare }) => {
           Start Goal
         </button>
         {handleShare ? (
-          <button class="share-btn" onClick={handleShare}>
+          <button className="share-btn" onClick={handleShare}>
             <FontAwesomeIcon icon="fa-solid fa-share-nodes" />
           </button>
         ) : null}

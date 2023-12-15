@@ -51,19 +51,45 @@ const EditGoal = (props) => {
 
   return (
     <div className="edit-goal-container">
-      <FontAwesomeIcon onClick={onRequestClose} icon="fa-solid fa-xmark" />
+      <div className="close-wrapper">
+        <button className="close-btn" onClick={onRequestClose}>
+          <FontAwesomeIcon icon="fa-solid fa-xmark" />
+        </button>
+      </div>
 
-      <input value={name} onChange={(e) => setName(e.target.value)} />
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
+      <div className="inputs-wrapper">
+        <input
+          className="name-input"
+          placeholder="Goal Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <textarea
+          className="description-input"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
 
-      <button onClick={() => setIsDeleteModalOpen(true)}>Delete</button>
-      <button onClick={() => setIsCategoriesModalOpen(true)}>
-        Edit Categories
-      </button>
-      <button onClick={updateGoal}>Save</button>
+      <div className="buttons-wrapper">
+        <button
+          className="delete-btn"
+          onClick={() => setIsDeleteModalOpen(true)}
+        >
+          Delete
+        </button>
+        <div className="right-buttons-wrapper">
+          <button
+            className="categories-btn"
+            onClick={() => setIsCategoriesModalOpen(true)}
+          >
+            Edit Categories
+          </button>
+          <button className="save-btn" onClick={updateGoal}>
+            Save
+          </button>
+        </div>
+      </div>
 
       <Modal
         isModalOpen={isCategoriesModalOpen}
@@ -79,6 +105,10 @@ const EditGoal = (props) => {
       <Modal
         isModalOpen={isDeleteModalOpen}
         onRequestClose={() => setIsDeleteModalOpen(false)}
+        content={{
+          width: "400px",
+          height: "250px",
+        }}
       >
         <ConfirmDelete
           message="Are you sure you want to delete this goal?"
