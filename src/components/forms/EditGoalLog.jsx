@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import CategorySelector from "./CategorySelector";
 import fetchWrapper from "../../util/apiWrapper";
-import Modal from "../modals/Modal";
-import EditCategories from "./CategorySelector";
 import ConfirmDelete from "./ConfirmDelete";
-import { formatDate } from "../../util/dateUtils";
+import Modal from "../modals/Modal";
 
 import { useAppData } from "../../context/appDataContext";
+import { formatDate } from "../../util/dateUtils";
 
 const EditGoalLog = (props) => {
   const { goalLog, onRequestClose } = props;
@@ -139,8 +139,12 @@ const EditGoalLog = (props) => {
       <Modal
         isModalOpen={isCategoriesModalOpen}
         onRequestClose={() => setIsCategoriesModalOpen(false)}
+        content={{
+          width: "350px",
+          height: "400px",
+        }}
       >
-        <EditCategories
+        <CategorySelector
           onRequestClose={() => setIsCategoriesModalOpen(false)}
           categoryIds={categoryIds}
           setCategoryIds={setCategoryIds}

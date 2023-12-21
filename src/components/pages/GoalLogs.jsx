@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import fetchWrapper from "../../util/apiWrapper";
+import EditGoalLog from "../forms/EditGoalLog";
 import GoalLogCard from "../GoalLogCard";
+import Modal from "../modals/Modal";
 
 import { useAppData } from "../../context/appDataContext";
-import Modal from "../modals/Modal";
-import EditGoalLog from "../forms/EditGoalLog";
 import { displayDate } from "../../util/dateUtils";
 
 const GoalLogs = () => {

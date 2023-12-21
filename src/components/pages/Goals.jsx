@@ -6,6 +6,7 @@ import UserSelector from "../forms/UserSelector";
 import EditGoal from "../forms/EditGoal";
 import Modal from "../modals/Modal";
 import GoalCard from "../GoalCard";
+
 import { useAppData } from "../../context/appDataContext";
 
 const Goals = () => {
@@ -104,6 +105,10 @@ const Goals = () => {
       <Modal
         isModalOpen={isShareGoalModalOpen}
         onRequestClose={() => setIsShareGoalModalOpen(false)}
+        content={{
+          width: "350px",
+          height: "400px",
+        }}
       >
         <UserSelector
           goal={selectedGoal}

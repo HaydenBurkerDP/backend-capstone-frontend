@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAppData } from "../../context/appDataContext";
+
 import fetchWrapper from "../../util/apiWrapper";
+
+import { useAppData } from "../../context/appDataContext";
 import { useAuthInfo } from "../../context/authContext";
 
 const UserSelector = (props) => {
@@ -24,43 +26,54 @@ const UserSelector = (props) => {
   }, [fetchUsers]);
 
   return (
-    <div>
-      <FontAwesomeIcon onClick={onRequestClose} icon="fa-solid fa-xmark" />
+    <div className="user-selector-container">
+      <div className="close-wrapper">
+        <button className="close-btn">
+          <FontAwesomeIcon onClick={onRequestClose} icon="fa-solid fa-xmark" />
+        </button>
+      </div>
       <h1>Users</h1>
       <input
+        className="search-input"
         type="text"
         placeholder="Search Users..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      {users
-        .filter((u) => u.user_id !== user.user_id)
-        .filter((u) => {
-          const name = `${u.first_name} ${u.last_name}`;
-          return name.toLowerCase().includes(searchTerm.toLowerCase());
-        })
-        .map((user) => (
-          <h1
-            key={user.user_id}
-            onClick={() => {
-              fetchWrapper(`/goal/${goal.goal_id}`, "PUT", {
-                user_id: user.user_id,
-              }).then((res) => {
-                setGoal(res.goal);
-                setMyGoals((prev) =>
-                  prev.map((currentGoal) =>
-                    currentGoal.goal_id === goal.goal_id
-                      ? res.goal
-                      : currentGoal
-                  )
-                );
-              });
-            }}
-          >
-            {goal.users.some((u) => u.user_id === user.user_id) ? "!" : ""}
-            {`${user.first_name} ${user.last_name}`}
-          </h1>
-        ))}
+      <div className="user-selected-wrapper">
+        {users
+          .filter((u) => u.user_id !== user.user_id)
+          .filter((u) => {
+            const name = `${u.first_name} ${u.last_name}`;
+            return name.toLowerCase().includes(searchTerm.toLowerCase());
+          })
+          .map((user) => (
+            <div
+              className={`user-name${
+                goal.users.some((u) => u.user_id === user.user_id)
+                  ? " selected"
+                  : ""
+              }`}
+              key={user.user_id}
+              onClick={() => {
+                fetchWrapper(`/goal/${goal.goal_id}`, "PUT", {
+                  user_id: user.user_id,
+                }).then((res) => {
+                  setGoal(res.goal);
+                  setMyGoals((prev) =>
+                    prev.map((currentGoal) =>
+                      currentGoal.goal_id === goal.goal_id
+                        ? res.goal
+                        : currentGoal
+                    )
+                  );
+                });
+              }}
+            >
+              {`${user.first_name} ${user.last_name}`}
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
