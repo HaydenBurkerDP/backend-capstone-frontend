@@ -49,6 +49,14 @@ const EditGoal = (props) => {
     });
   };
 
+  const deleteGoal = () =>
+    fetchWrapper(`/goal/delete/${goal.goal_id}`, "DELETE").then(() => {
+      onRequestClose();
+      setMyGoals((prev) =>
+        prev.filter((currentGoal) => currentGoal.goal_id !== goal.goal_id)
+      );
+    });
+
   return (
     <div className="edit-goal-container">
       <div className="close-wrapper">
@@ -117,16 +125,7 @@ const EditGoal = (props) => {
         <ConfirmDelete
           message="Are you sure you want to delete this goal?"
           onRequestClose={() => setIsDeleteModalOpen(false)}
-          handleDelete={() =>
-            fetchWrapper(`/goal/delete/${goal.goal_id}`, "DELETE").then(() => {
-              onRequestClose();
-              setMyGoals((prev) =>
-                prev.filter(
-                  (currentGoal) => currentGoal.goal_id !== goal.goal_id
-                )
-              );
-            })
-          }
+          handleDelete={deleteGoal}
         />
       </Modal>
     </div>

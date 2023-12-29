@@ -9,12 +9,14 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    z-index: 1;
 
     .close-btn {
       border: none;
       background: transparent;
       font-size: xx-large;
       padding: 0;
+      height: fit-content;
     }
   }
 
@@ -30,11 +32,11 @@
     width: 100%;
 
     .cancel-btn {
-      background-color: #b07470;
+      background-color: $red;
     }
 
     .delete-btn {
-      background-color: #619d72;
+      background-color: $green;
     }
 
     button {

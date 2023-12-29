@@ -14,7 +14,6 @@ const NavBar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      console.log(event);
       if (
         userMenuRef.current &&
         !userMenuRef.current.contains(event.target) &&
@@ -49,7 +48,8 @@ const NavBar = () => {
       </div>
 
       <div className="right-side-wrapper">
-        <h2>{user?.first_name}</h2>
+        {console.log(user)}
+        <h2 className="name">{user?.first_name}</h2>
         <div
           ref={userMenuToggleRef}
           onClick={() => setIsUserMenuOpen((prev) => !prev)}

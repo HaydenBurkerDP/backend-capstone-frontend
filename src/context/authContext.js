@@ -55,8 +55,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    Cookies.remove("auth");
-    history.push(loginPath);
+    return fetchWrapper("/user/logout", "PUT").then((res) => {
+      Cookies.remove("auth");
+      history.push(loginPath);
+      return res;
+    });
   };
 
   const values = { login, logout, user };

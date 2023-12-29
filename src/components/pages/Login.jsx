@@ -10,7 +10,10 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(email, password).catch(console.error);
+    login(email, password).catch((err) => {
+      console.error("Login error", err);
+      setPassword("");
+    });
   };
 
   return (
@@ -26,14 +29,21 @@ const Login = () => {
 
         <form className="login-form">
           <div className="input-wrapper">
-            <label>Email</label>
-            <input type="email" onChange={(e) => setEmail(e.target.value)} />
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
           <div className="input-wrapper">
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
             <input
+              id="password"
               type="password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>

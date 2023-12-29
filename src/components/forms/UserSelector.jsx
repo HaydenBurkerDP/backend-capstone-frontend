@@ -25,6 +25,41 @@ const UserSelector = (props) => {
     return () => controller.abort();
   }, [fetchUsers]);
 
+  const updateUserList = (user) => {
+    fetchWrapper(`/goal/${goal.goal_id}`, "PUT", {
+      user_id: user.user_id,
+    }).then((res) => {
+      setGoal(res.goal);
+      setMyGoals((prev) =>
+        prev.map((currentGoal) =>
+          currentGoal.goal_id === goal.goal_id ? res.goal : currentGoal
+        )
+      );
+    });
+  };
+
+  const renderUserList = () => {
+    return users
+      .filter((u) => u.user_id !== user.user_id)
+      .filter((u) => {
+        const name = `${u.first_name} ${u.last_name}`;
+        return name.toLowerCase().includes(searchTerm.toLowerCase());
+      })
+      .map((user) => (
+        <div
+          className={`user-name${
+            goal.users.some((u) => u.user_id === user.user_id)
+              ? " selected"
+              : ""
+          }`}
+          key={user.user_id}
+          onClick={() => updateUserList(user)}
+        >
+          {`${user.first_name} ${user.last_name}`}
+        </div>
+      ));
+  };
+
   return (
     <div className="user-selector-container">
       <div className="close-wrapper">
@@ -40,40 +75,7 @@ const UserSelector = (props) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <div className="user-selected-wrapper">
-        {users
-          .filter((u) => u.user_id !== user.user_id)
-          .filter((u) => {
-            const name = `${u.first_name} ${u.last_name}`;
-            return name.toLowerCase().includes(searchTerm.toLowerCase());
-          })
-          .map((user) => (
-            <div
-              className={`user-name${
-                goal.users.some((u) => u.user_id === user.user_id)
-                  ? " selected"
-                  : ""
-              }`}
-              key={user.user_id}
-              onClick={() => {
-                fetchWrapper(`/goal/${goal.goal_id}`, "PUT", {
-                  user_id: user.user_id,
-                }).then((res) => {
-                  setGoal(res.goal);
-                  setMyGoals((prev) =>
-                    prev.map((currentGoal) =>
-                      currentGoal.goal_id === goal.goal_id
-                        ? res.goal
-                        : currentGoal
-                    )
-                  );
-                });
-              }}
-            >
-              {`${user.first_name} ${user.last_name}`}
-            </div>
-          ))}
-      </div>
+      <div className="user-selected-wrapper">{renderUserList()}</div>
     </div>
   );
 };

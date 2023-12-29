@@ -47,7 +47,6 @@ const EditGoalLog = (props) => {
       end_date: endDate ? endDate : null,
       completion_date: completionDate ? completionDate : null,
     };
-    console.log(newGoalLog);
 
     fetchWrapper(`/goal-log/${goalLog.goal_log_id}`, "PUT", newGoalLog).then(
       (res) => {
@@ -62,6 +61,19 @@ const EditGoalLog = (props) => {
       }
     );
   };
+
+  const deleteGoal = () =>
+    fetchWrapper(`/goal-log/delete/${goalLog.goal_log_id}`, "DELETE").then(
+      () => {
+        onRequestClose();
+        setGoalLogs((prev) =>
+          prev.filter(
+            (currentGoalLog) =>
+              currentGoalLog.goal_log_id !== goalLog.goal_log_id
+          )
+        );
+      }
+    );
 
   return (
     <div className="edit-goal-log-container">
@@ -162,20 +174,7 @@ const EditGoalLog = (props) => {
         <ConfirmDelete
           message="Are you sure you want to delete this goal?"
           onRequestClose={() => setIsDeleteModalOpen(false)}
-          handleDelete={() =>
-            fetchWrapper(
-              `/goal-log/delete/${goalLog.goal_log_id}`,
-              "DELETE"
-            ).then(() => {
-              onRequestClose();
-              setGoalLogs((prev) =>
-                prev.filter(
-                  (currentGoalLog) =>
-                    currentGoalLog.goal_log_id !== goalLog.goal_log_id
-                )
-              );
-            })
-          }
+          handleDelete={deleteGoal}
         />
       </Modal>
     </div>

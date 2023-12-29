@@ -1,8 +1,9 @@
 .navbar-container {
   display: flex;
   justify-content: space-between;
-  background-color: #a6bfd6;
+  background-color: $light-blue;
   width: 100%;
+  height: 70px;
   box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.3);
 
   .links-wrapper {
@@ -25,22 +26,25 @@
 
     .highlight-green {
       &.active {
-        background-color: #619d72;
+        background-color: $green;
       }
     }
 
     .highlight-blue {
       &.active {
-        background-color: #7091b0;
+        background-color: $metallic-blue;
       }
     }
   }
 
   .right-side-wrapper {
     display: flex;
-    width: 162px;
-    justify-content: space-evenly;
     align-items: center;
+    padding: 0 20px 0 0;
+
+    .name {
+      padding: 0 20px;
+    }
 
     .user-menu {
       background-color: white;

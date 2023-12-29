@@ -10,12 +10,14 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    z-index: 1;
 
     .close-btn {
       border: none;
       background: transparent;
       font-size: xx-large;
       padding: 0;
+      height: fit-content;
     }
   }
 
@@ -43,7 +45,7 @@
       height: 100%;
       border-radius: 4px;
       resize: none;
-      background-color: #d6ebff;
+      background-color: $white-blue;
       padding: 8px;
 
       &:focus-visible {
@@ -80,15 +82,15 @@
     margin-top: 2%;
 
     .delete-btn {
-      background-color: #b07470;
+      background-color: $red;
     }
 
     .categories-btn {
-      background-color: #7091b0;
+      background-color: $metallic-blue;
     }
 
     .save-btn {
-      background-color: #619d72;
+      background-color: $green;
     }
 
     .right-buttons-wrapper {

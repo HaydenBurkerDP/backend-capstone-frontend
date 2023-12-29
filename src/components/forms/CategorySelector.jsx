@@ -10,6 +10,34 @@ const EditCategories = (props) => {
 
   const { categories } = useAppData();
 
+  const updateCategoryList = (category) => {
+    setCategoryIds((prev) =>
+      prev.includes(category.category_id)
+        ? prev.filter((c) => c !== category.category_id)
+        : [...prev, category.category_id]
+    );
+  };
+
+  const renderCategoryList = () => {
+    return categories
+      .filter((category) => {
+        return category.name.toLowerCase().includes(searchTerm.toLowerCase());
+      })
+      .map((category) => {
+        return (
+          <div
+            className={`category-name${
+              categoryIds.includes(category.category_id) ? " selected" : ""
+            }`}
+            key={category.category_id}
+            onClick={() => updateCategoryList(category)}
+          >
+            {category.name}
+          </div>
+        );
+      });
+  };
+
   return (
     <div className="category-selector-container">
       <div className="close-wrapper">
@@ -25,33 +53,7 @@ const EditCategories = (props) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <div className="category-selected-wrapper">
-        {categories
-          .filter((category) => {
-            return category.name
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase());
-          })
-          .map((category) => {
-            return (
-              <div
-                className={`category-name${
-                  categoryIds.includes(category.category_id) ? " selected" : ""
-                }`}
-                key={category.category_id}
-                onClick={() => {
-                  setCategoryIds((prev) =>
-                    prev.includes(category.category_id)
-                      ? prev.filter((c) => c !== category.category_id)
-                      : [...prev, category.category_id]
-                  );
-                }}
-              >
-                {category.name}
-              </div>
-            );
-          })}
-      </div>
+      <div className="category-selected-wrapper">{renderCategoryList()}</div>
     </div>
   );
 };

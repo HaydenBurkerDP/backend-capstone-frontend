@@ -3,6 +3,13 @@ import fetchWrapper from "../util/apiWrapper";
 import { displayDate } from "../util/dateUtils";
 
 const GoalCard = ({ goal, handleEdit, handleShare }) => {
+  const createGoalLog = () => {
+    fetchWrapper("/goal-log", "POST", {
+      goal_id: goal.goal_id,
+      start_date: displayDate(new Date()),
+    });
+  };
+
   return (
     <div className="goal-card">
       <div className="top">
@@ -17,15 +24,7 @@ const GoalCard = ({ goal, handleEdit, handleShare }) => {
       <p className="goal-description">{goal.description}</p>
 
       <div className="bottom">
-        <button
-          className="start-goal-btn"
-          onClick={() => {
-            fetchWrapper("/goal-log", "POST", {
-              goal_id: goal.goal_id,
-              start_date: displayDate(new Date()),
-            });
-          }}
-        >
+        <button className="start-goal-btn" onClick={createGoalLog}>
           Start Goal
         </button>
         {handleShare ? (

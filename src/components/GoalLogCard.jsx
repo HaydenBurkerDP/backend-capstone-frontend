@@ -26,6 +26,7 @@ const GoalLogCard = (props) => {
         <div className="date-wrapper">
           Start Date: {displayDate(goalLog.start_date)}
         </div>
+
         {completed ? null : (
           <div className="date-wrapper">
             End Date: {displayDate(goalLog.end_date)}
