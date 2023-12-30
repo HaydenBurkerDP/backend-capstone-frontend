@@ -14,8 +14,14 @@ const Goals = () => {
   const [isEditGoalModalOpen, setIsEditGoalModalOpen] = useState(false);
   const [isShareGoalModalOpen, setIsShareGoalModalOpen] = useState(false);
 
-  const { myGoals, setMyGoals, fetchMyGoals, sharedGoals, fetchSharedGoals } =
-    useAppData();
+  const {
+    fetchSharedGoals,
+    fetchMyGoals,
+    sharedGoals,
+    setMyGoals,
+    category,
+    myGoals,
+  } = useAppData();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -39,46 +45,68 @@ const Goals = () => {
     return () => controller.abort();
   }, [fetchSharedGoals]);
 
+  const createGoal = () => {
+    const newGoal = {
+      name: "",
+      description: "",
+    };
+
+    if (category.category_id) newGoal.category_ids = [category.category_id];
+
+    fetchWrapper("/goal", "POST", newGoal).then((res) => {
+      setMyGoals((prev) => [...prev, res.goal]);
+      setIsEditGoalModalOpen(true);
+      setSelectedGoal(res.goal);
+    });
+  };
+
+  const goalHasCategory = (goal, category) => {
+    return (
+      !category?.category_id ||
+      goal.categories.some((c) => c.category_id === category.category_id)
+    );
+  };
+
+  const renderMyGoals = () => {
+    return myGoals
+      .filter((goal) => goalHasCategory(goal, category))
+      .map((goal) => {
+        return (
+          <GoalCard
+            key={goal.goal_id}
+            goal={goal}
+            handleEdit={() => {
+              setIsEditGoalModalOpen(true);
+              setSelectedGoal(goal);
+            }}
+            handleShare={() => {
+              setIsShareGoalModalOpen(true);
+              setSelectedGoal(goal);
+            }}
+          />
+        );
+      });
+  };
+
+  const renderSharedGoals = () => {
+    return sharedGoals
+      .filter((goal) => goalHasCategory(goal, category))
+      .map((goal) => {
+        return <GoalCard key={goal.goal_id} goal={goal} />;
+      });
+  };
+
   return (
     <div className="goals-container">
       <div className="goals-header">
         <h1>My Goals</h1>
 
-        <button className="plus-btn">
-          <FontAwesomeIcon
-            onClick={() => {
-              fetchWrapper("/goal", "POST", {
-                name: "",
-                description: "",
-              }).then((res) => {
-                setMyGoals((prev) => [...prev, res.goal]);
-                setIsEditGoalModalOpen(true);
-                setSelectedGoal(res.goal);
-              });
-            }}
-            icon="fa-solid fa-plus"
-          />
+        <button className="plus-btn" onClick={createGoal}>
+          <FontAwesomeIcon icon="fa-solid fa-plus" />
         </button>
       </div>
 
-      <div className="goal-cards-container">
-        {myGoals.map((goal) => {
-          return (
-            <GoalCard
-              key={goal.goal_id}
-              goal={goal}
-              handleEdit={() => {
-                setIsEditGoalModalOpen(true);
-                setSelectedGoal(goal);
-              }}
-              handleShare={() => {
-                setIsShareGoalModalOpen(true);
-                setSelectedGoal(goal);
-              }}
-            />
-          );
-        })}
-      </div>
+      <div className="goal-cards-container">{renderMyGoals()}</div>
 
       {sharedGoals.length ? (
         <div className="goals-header">
@@ -86,11 +114,7 @@ const Goals = () => {
         </div>
       ) : null}
 
-      <div className="goal-cards-container">
-        {sharedGoals.map((goal) => {
-          return <GoalCard key={goal.goal_id} goal={goal} />;
-        })}
-      </div>
+      <div className="goal-cards-container">{renderSharedGoals()}</div>
 
       <Modal
         isModalOpen={isEditGoalModalOpen}

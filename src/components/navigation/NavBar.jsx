@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 
 import { useAuthInfo } from "../../context/authContext";
+import { useAppData } from "../../context/appDataContext";
 
 const NavBar = () => {
   const userMenuRef = useRef(null);
@@ -11,6 +12,7 @@ const NavBar = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const { logout, user } = useAuthInfo();
+  const { categories, setCategory } = useAppData();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -31,6 +33,15 @@ const NavBar = () => {
     };
   }, [isUserMenuOpen]);
 
+  const getCategory = (categoryId) => {
+    for (const category of categories) {
+      if (category.category_id === categoryId) {
+        return category;
+      }
+    }
+    return {};
+  };
+
   return (
     <div className="navbar-container">
       <div className="links-wrapper">
@@ -48,7 +59,23 @@ const NavBar = () => {
       </div>
 
       <div className="right-side-wrapper">
-        {console.log(user)}
+        <div className="category-dropdown-wrapper">
+          <h2>Category</h2>
+          <select
+            className="category-dropdown"
+            name="category"
+            id="category"
+            onChange={(e) => setCategory(getCategory(e.target.value))}
+          >
+            <option value="">All</option>
+            {categories.map((category) => (
+              <option key={category.category_id} value={category.category_id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <h2 className="name">{user?.first_name}</h2>
         <div
           ref={userMenuToggleRef}

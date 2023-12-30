@@ -13,7 +13,7 @@ const GoalLogs = () => {
   const [selectedGoalLog, setSelectedGoalLog] = useState(null);
   const [isEditGoalLogModalOpen, setIsEditGoalLogModalOpen] = useState(false);
 
-  const { goalLogs, setGoalLogs, fetchGoalLogs } = useAppData();
+  const { goalLogs, setGoalLogs, fetchGoalLogs, category } = useAppData();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -26,10 +26,32 @@ const GoalLogs = () => {
     return () => controller.abort();
   }, [fetchGoalLogs]);
 
+  const createGoalLog = () => {
+    const newGoalLog = {
+      name: "",
+      description: "",
+      start_date: displayDate(new Date()),
+    };
+
+    if (category?.category_id) newGoalLog.category_ids = [category.category_id];
+
+    fetchWrapper("/goal-log", "POST", newGoalLog).then((res) => {
+      setGoalLogs((prev) => [...prev, res.goal_log]);
+      setIsEditGoalLogModalOpen(true);
+      setSelectedGoalLog(res.goal_log);
+    });
+  };
+
   const renderGoalLogs = (isCompleted) => {
     return goalLogs
       .filter((goalLog) => {
         return !!goalLog.completion_date === isCompleted;
+      })
+      .filter((goalLog) => {
+        return (
+          !category?.category_id ||
+          goalLog.categories.some((c) => c.category_id === category.category_id)
+        );
       })
       .map((goalLog) => {
         return (
@@ -66,20 +88,7 @@ const GoalLogs = () => {
         <h1>Goals in Progress</h1>
 
         <button className="plus-btn">
-          <FontAwesomeIcon
-            onClick={() => {
-              fetchWrapper("/goal-log", "POST", {
-                name: "",
-                description: "",
-                start_date: displayDate(new Date()),
-              }).then((res) => {
-                setGoalLogs((prev) => [...prev, res.goal_log]);
-                setIsEditGoalLogModalOpen(true);
-                setSelectedGoalLog(res.goal_log);
-              });
-            }}
-            icon="fa-solid fa-plus"
-          />
+          <FontAwesomeIcon onClick={createGoalLog} icon="fa-solid fa-plus" />
         </button>
       </div>
 

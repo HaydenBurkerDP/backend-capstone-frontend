@@ -42,6 +42,23 @@
     align-items: center;
     padding: 0 20px 0 0;
 
+    .category-dropdown-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-right: 50px;
+
+      .category-dropdown {
+        background-color: $white-blue;
+        font-size: 20px;
+        margin: 0 5px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid $gray;
+        cursor: pointer;
+      }
+    }
+
     .name {
       padding: 0 20px;
     }

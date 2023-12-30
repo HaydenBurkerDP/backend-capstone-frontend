@@ -14,6 +14,7 @@ export const AppDataContextProvider = ({ children }) => {
   const [sharedGoals, setSharedGoals] = useState([]);
   const [goalLogs, setGoalLogs] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState({});
   const [users, setUsers] = useState([]);
 
   const fetchMyGoals = useCallback((signal) => {
@@ -74,6 +75,8 @@ export const AppDataContextProvider = ({ children }) => {
     categories,
     setCategories,
     fetchCategories,
+    category,
+    setCategory,
     users,
     setUsers,
     fetchUsers,
