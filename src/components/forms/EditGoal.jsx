@@ -7,6 +7,8 @@ import ConfirmDelete from "./ConfirmDelete";
 import Modal from "../modals/Modal";
 
 import { useAppData } from "../../context/appDataContext";
+import { successfulToast } from "../../util/toastNotification";
+import { displayName } from "../../util/goalUtils";
 
 const EditGoal = (props) => {
   const { goal, onRequestClose } = props;
@@ -55,6 +57,7 @@ const EditGoal = (props) => {
       setMyGoals((prev) =>
         prev.filter((currentGoal) => currentGoal.goal_id !== goal.goal_id)
       );
+      successfulToast(`Deleted ${displayName(goal.name)}`);
     });
 
   return (

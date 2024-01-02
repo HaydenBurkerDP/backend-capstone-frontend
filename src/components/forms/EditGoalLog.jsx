@@ -6,7 +6,9 @@ import fetchWrapper from "../../util/apiWrapper";
 import ConfirmDelete from "./ConfirmDelete";
 import Modal from "../modals/Modal";
 
+import { successfulToast } from "../../util/toastNotification";
 import { useAppData } from "../../context/appDataContext";
+import { displayName } from "../../util/goalUtils";
 import { formatDate } from "../../util/dateUtils";
 
 const EditGoalLog = (props) => {
@@ -72,6 +74,7 @@ const EditGoalLog = (props) => {
               currentGoalLog.goal_log_id !== goalLog.goal_log_id
           )
         );
+        successfulToast(`Deleted ${displayName(goalLog.name)}`);
       }
     );
 

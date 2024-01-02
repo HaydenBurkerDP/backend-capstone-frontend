@@ -1,13 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import fetchWrapper from "../util/apiWrapper";
-import { displayDate } from "../util/dateUtils";
+
 import { successfulToast } from "../util/toastNotification";
+import { displayDate } from "../util/dateUtils";
+import { displayName } from "../util/goalUtils";
 
 const GoalCard = ({ goal, handleEdit, handleShare }) => {
-  const displayName = (name) => {
-    return name ? name : "Untitled Goal";
-  };
-
   const createGoalLog = () => {
     fetchWrapper("/goal-log", "POST", {
       goal_id: goal.goal_id,
