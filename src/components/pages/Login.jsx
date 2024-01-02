@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { useAuthInfo } from "../../context/authContext";
 
+import goalLogo from "../../assets/images/Goal.png";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +21,8 @@ const Login = () => {
   return (
     <div className="login-page-container">
       <div className="logo-wrapper">
-        <h1>LOGO</h1>
+        <img className="logo" src={goalLogo} alt="Goal Logo" />
+        <h1>GOALS</h1>
       </div>
 
       <div className="login-wrapper">

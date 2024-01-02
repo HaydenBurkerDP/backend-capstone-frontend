@@ -1,19 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import fetchWrapper from "../util/apiWrapper";
 import { displayDate } from "../util/dateUtils";
+import { successfulToast } from "../util/toastNotification";
 
 const GoalCard = ({ goal, handleEdit, handleShare }) => {
+  const displayName = (name) => {
+    return name ? name : "Untitled Goal";
+  };
+
   const createGoalLog = () => {
     fetchWrapper("/goal-log", "POST", {
       goal_id: goal.goal_id,
       start_date: displayDate(new Date()),
+    }).then((res) => {
+      successfulToast(`Added ${displayName(res.goal_log.name)} to goal logs`);
     });
   };
 
   return (
     <div className="goal-card">
       <div className="top">
-        <h1 className="goal-name">{goal.name ? goal.name : "Untitled Goal"}</h1>
+        <h1 className="goal-name">{displayName(goal.name)}</h1>
         {handleEdit ? (
           <button className="edit-btn" onClick={handleEdit}>
             <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />

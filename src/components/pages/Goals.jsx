@@ -68,24 +68,32 @@ const Goals = () => {
   };
 
   const renderMyGoals = () => {
-    return myGoals
-      .filter((goal) => goalHasCategory(goal, category))
-      .map((goal) => {
-        return (
-          <GoalCard
-            key={goal.goal_id}
-            goal={goal}
-            handleEdit={() => {
-              setIsEditGoalModalOpen(true);
-              setSelectedGoal(goal);
-            }}
-            handleShare={() => {
-              setIsShareGoalModalOpen(true);
-              setSelectedGoal(goal);
-            }}
-          />
-        );
-      });
+    const renderedGoals = myGoals.filter((goal) =>
+      goalHasCategory(goal, category)
+    );
+    if (renderedGoals.length === 0) {
+      return (
+        <h1 className="empty-container-text">
+          No goals found! Click the + to create a new one
+        </h1>
+      );
+    }
+    return renderedGoals.map((goal) => {
+      return (
+        <GoalCard
+          key={goal.goal_id}
+          goal={goal}
+          handleEdit={() => {
+            setIsEditGoalModalOpen(true);
+            setSelectedGoal(goal);
+          }}
+          handleShare={() => {
+            setIsShareGoalModalOpen(true);
+            setSelectedGoal(goal);
+          }}
+        />
+      );
+    });
   };
 
   const renderSharedGoals = () => {

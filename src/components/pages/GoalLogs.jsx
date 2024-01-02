@@ -42,7 +42,7 @@ const GoalLogs = () => {
     });
   };
 
-  const renderGoalLogs = (isCompleted) => {
+  const filterGoalLogs = (isCompleted) => {
     return goalLogs
       .filter((goalLog) => {
         return !!goalLog.completion_date === isCompleted;
@@ -52,34 +52,53 @@ const GoalLogs = () => {
           !category?.category_id ||
           goalLog.categories.some((c) => c.category_id === category.category_id)
         );
-      })
-      .map((goalLog) => {
-        return (
-          <GoalLogCard
-            key={goalLog.goal_log_id}
-            goalLog={goalLog}
-            handleEdit={() => {
-              setIsEditGoalLogModalOpen(true);
-              setSelectedGoalLog(goalLog);
-            }}
-            toggleCompletionDate={() => {
-              const completionDate = goalLog.completion_date
-                ? null
-                : displayDate(new Date());
-
-              fetchWrapper(`/goal-log/${goalLog.goal_log_id}`, "PUT", {
-                completion_date: completionDate,
-              }).then((res) =>
-                setGoalLogs((prev) =>
-                  prev.map((gl) =>
-                    gl.goal_log_id === goalLog.goal_log_id ? res.goal_log : gl
-                  )
-                )
-              );
-            }}
-          />
-        );
       });
+  };
+
+  const renderGoalLogs = (isCompleted) => {
+    const renderedGoalLogs = filterGoalLogs(isCompleted);
+
+    if (renderedGoalLogs.length === 0 && !isCompleted) {
+      const completedGoalLogCount = filterGoalLogs(true).length;
+
+      return completedGoalLogCount ? (
+        <h1 className="empty-container-text">
+          Nice job! You have completed all your goals!
+        </h1>
+      ) : (
+        <h1 className="empty-container-text">
+          No goal logs found! Click the + to create a new one
+        </h1>
+      );
+    }
+
+    return renderedGoalLogs.map((goalLog) => {
+      return (
+        <GoalLogCard
+          key={goalLog.goal_log_id}
+          goalLog={goalLog}
+          handleEdit={() => {
+            setIsEditGoalLogModalOpen(true);
+            setSelectedGoalLog(goalLog);
+          }}
+          toggleCompletionDate={() => {
+            const completionDate = goalLog.completion_date
+              ? null
+              : displayDate(new Date());
+
+            fetchWrapper(`/goal-log/${goalLog.goal_log_id}`, "PUT", {
+              completion_date: completionDate,
+            }).then((res) =>
+              setGoalLogs((prev) =>
+                prev.map((gl) =>
+                  gl.goal_log_id === goalLog.goal_log_id ? res.goal_log : gl
+                )
+              )
+            );
+          }}
+        />
+      );
+    });
   };
 
   return (
@@ -94,11 +113,15 @@ const GoalLogs = () => {
 
       <div className="goal-log-cards-container">{renderGoalLogs(false)}</div>
 
-      <div className="goal-logs-header">
-        <h1>Goals Completed</h1>
-      </div>
+      {filterGoalLogs(true).length ? (
+        <>
+          <div className="goal-logs-header">
+            <h1>Goals Completed</h1>
+          </div>
 
-      <div className="goal-log-cards-container">{renderGoalLogs(true)}</div>
+          <div className="goal-log-cards-container">{renderGoalLogs(true)}</div>
+        </>
+      ) : null}
 
       <Modal
         isModalOpen={isEditGoalLogModalOpen}

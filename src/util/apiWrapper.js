@@ -31,8 +31,8 @@ const fetchWrapper = (
         if (!res.ok) throw new Error(res.statusText);
         return res.json();
       })
-      .catch(reject)
-      .then(resolve);
+      .then(resolve)
+      .catch(reject);
   });
 };
 

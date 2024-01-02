@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import { useAuthInfo } from "../../context/authContext";
 import { useAppData } from "../../context/appDataContext";
 
+import goalLogo from "../../assets/images/Goal.png";
+
 const NavBar = () => {
   const userMenuRef = useRef(null);
   const userMenuToggleRef = useRef(null);
@@ -46,7 +48,7 @@ const NavBar = () => {
     <div className="navbar-container">
       <div className="links-wrapper">
         <NavLink exact to="/">
-          LOGO
+          <img className="logo" src={goalLogo} alt="" />
         </NavLink>
 
         <NavLink className="highlight-green" to="/goals">
@@ -78,6 +80,7 @@ const NavBar = () => {
 
         <h2 className="name">{user?.first_name}</h2>
         <div
+          className="user-menu-arrow"
           ref={userMenuToggleRef}
           onClick={() => setIsUserMenuOpen((prev) => !prev)}
         >
