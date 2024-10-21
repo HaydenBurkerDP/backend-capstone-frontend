@@ -1,19 +1,11 @@
 import Cookies from "js-cookie";
 
-const host =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_API_HOST
-    : "localhost";
+const host = process.env.REACT_APP_API_HOST || "localhost";
+const port = process.env.REACT_APP_API_PORT || "8086";
 
-const port =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_API_PORT
-    : "8086";
-
-const apiUrl =
-  process.env.NODE_ENV === "production"
-    ? `https://${host}`
-    : `http://${host}:${port}`;
+const apiUrl = process.env.REACT_APP_API_HOST
+  ? `https://${host}`
+  : `http://${host}:${port}`;
 
 const fetchWrapper = (
   apiEndpoint,
